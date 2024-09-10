@@ -1,1 +1,26 @@
+# Virtual environment folders
 myenv/
+env/
+venv/
+.myenv/
+
+# Python cache
+__pycache__/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Data files
+*.npy
+*.csv
+*.json
+*.h5
+
+# Logs and output files
+*.log
+*.out
+*.err
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
