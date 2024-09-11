@@ -15,6 +15,7 @@ __pycache__/
 *.csv
 *.json
 *.h5
+*.avi
 
 # Logs and output files
 *.log
