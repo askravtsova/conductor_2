@@ -82,7 +82,7 @@ if __name__ == "__main__":
     # Define the time signature and BPM for this collection
     time_signature = '4_4'
     bpm = '60'
-    sample_count = 20
+    sample_count = 30
     duration = 10  # Duration of each recording in seconds
 
     # Start recording samples

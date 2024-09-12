@@ -9,8 +9,11 @@ and ensuring that all .npy files are the same length and size for LSTM
 
 import numpy as np
 import os
-from sklearn.model_selection import train_test_split
+import json
 import tensorflow as tf
+import pandas as pd
+
+from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense, Dropout
 from tensorflow.keras.preprocessing.sequence import pad_sequences
@@ -56,8 +59,11 @@ processed_data_dir = 'data/processed_data/'
 X, y = load_all_npy_files(processed_data_dir, max_seq_len=100)
 
 # Split the data into train, validation, and test sets (70% train, 15% val, 15% test)
-X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.3, random_state=42)
-X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
+#X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.3, random_state=42)
+#X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
+
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
+
 
 # Build the LSTM model
 model = Sequential()
@@ -76,4 +82,22 @@ history = model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=30,
 test_loss, test_acc = model.evaluate(X_test, y_test)
 print(f"Test Accuracy: {test_acc * 100:.2f}%")
 
+#############
+## saving history
 
+# After training, save history to a JSON file
+with open('history_train_model_02.json', 'w') as f:
+    json.dump(history.history, f)
+    
+# convert the history.history dict to a pandas DataFrame:     
+hist_df = pd.DataFrame(history.history) 
+
+# save to json:  
+hist_json_file = 'history.json' 
+with open(hist_json_file, mode='w') as f:
+    hist_df.to_json(f)
+
+# or save to csv: 
+hist_csv_file = 'history.csv'
+with open(hist_csv_file, mode='w') as f:
+    hist_df.to_csv(f)
