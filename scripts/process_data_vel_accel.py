@@ -10,7 +10,6 @@ For each frame, the velocity (change in position) and acceleration (change in ve
 This extends each frame’s data to include landmarks + velocity + acceleration from previous script
 
 """
-
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -25,6 +24,7 @@ def process_video(input_path, output_path):
     landmark_data = []
     
     previous_landmarks = None
+    previous_velocity = None
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -34,33 +34,41 @@ def process_video(input_path, output_path):
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         results = hands.process(frame_rgb)
         
+        current_landmarks = []
+
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
                 current_landmarks = []
                 for lm in hand_landmarks.landmark:
                     current_landmarks.append([lm.x, lm.y, lm.z])
                     
-        # if there are previous landmarks, calculate the velocity and the acceleration
-        if previous_landmarks is not None:
-            velocity = []
-            acceleration = []
-            for i in range(len(current_landmarks)):
-                # velocity = difference between current and previous landmarks
-                v = np.linalg.norm(np.array(current_landmarks[i]) - np.array(previous_landmarks[i]))
-                velocity.append(v) # add on to data
-                
-                #acceleration = difference between the current and previous velocity
-                if len(landmark_data) > 0:
-                            previous_velocity = landmark_data[-1][-2][i]  # -2 to get previous velocity
-                            a = v - previous_velocity
-                            acceleration.append(a)
-            
-                #append the current landmarks along with velocity and accelration to the data
+        if current_landmarks:  # Only process if landmarks were detected
+            if previous_landmarks is not None:
+                velocity = []
+                acceleration = []
+                for i in range(len(current_landmarks)):
+                    # Calculate velocity as difference between current and previous landmarks
+                    v = np.linalg.norm(np.array(current_landmarks[i]) - np.array(previous_landmarks[i]))
+                    velocity.append(v)
+
+                    # If we have previous velocity, calculate acceleration
+                    if previous_velocity is not None:
+                        a = v - previous_velocity[i]
+                        acceleration.append(a)
+                    else:
+                        acceleration.append(0)  # No acceleration on the first calculation
+
+                # Append the current landmarks, velocity, and acceleration to the data
                 landmark_data.append([current_landmarks, velocity, acceleration])
-                
-                previous_landmarks = current_landmarks
-                
-    np.save(output_path, np.array(landmark_data))
+                previous_velocity = velocity  # Update the previous velocity for the next frame
+            else:
+                # Append just the landmarks for the first frame
+                landmark_data.append([current_landmarks, [], []])
+
+            previous_landmarks = current_landmarks  # Update previous landmarks for the next iteration
+
+    # Save the data using `np.save` with `allow_pickle=True` to support nested structures
+    np.save(output_path, np.array(landmark_data, dtype=object), allow_pickle=True)
     cap.release()
 
 if __name__ == "__main__":
