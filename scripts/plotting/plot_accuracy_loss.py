@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 # Load CSV into a pandas dataframe
-history_df = pd.read_csv('history_modeltrained.csv')
+history_df = pd.read_csv('model_trained_data_14_Oct_50epochs.csv')
 
 # Display the first few rows to inspect the data
 #print(history_df.head())
