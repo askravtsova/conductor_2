@@ -1,3 +1,9 @@
+"""
+File: check npy.py
+Author: Anna Kravtsova written for Thesis (2024)
+Date: September, 2024
+Description: check npy files
+"""
 import os
 import numpy as np
 

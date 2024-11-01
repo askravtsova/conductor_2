@@ -1,8 +1,14 @@
+"""
+File: plotbno.py
+Author: Anna Kravtsova written for Thesis (2024)
+Date: September, 2024
+Description: rough visualisation of bno055 stuff
+"""
 import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load the CSV data
-csv_file = 'scripts/arduino/data_hybrid/24_90bpm.csv'  # Replace with the correct path to your CSV file
+csv_file = 'scripts/arduino/data_hybrid/24_90bpm.csv' 
 data = pd.read_csv(csv_file)
 
 # Preview the first few rows of the data

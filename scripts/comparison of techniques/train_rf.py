@@ -1,3 +1,9 @@
+"""
+File: trainrf.py
+Author: Anna Kravtsova written for Thesis (2024)
+Date: September, 2024
+Description: train simple rf model base on flattened x vel 
+"""
 # train_rf.py
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier

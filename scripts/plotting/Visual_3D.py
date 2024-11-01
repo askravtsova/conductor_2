@@ -1,3 +1,9 @@
+"""
+File: visual3dt.py
+Author: Anna Kravtsova written for Thesis (2024)
+Date: September, 2024
+Description: visual in 3d space
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D

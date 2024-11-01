@@ -1,3 +1,9 @@
+"""
+File: svm train.py
+Author: Anna Kravtsova written for Thesis (2024)
+Date: September, 2024
+Description: flat data svm training
+"""
 # train_svm.py
 import numpy as np
 from sklearn.svm import SVC

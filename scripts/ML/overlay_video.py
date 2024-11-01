@@ -1,5 +1,5 @@
 """
-File: process_video.py
+File: overlay video.py
 Author: Anna Kravtsova written for Thesis (2024)
 Date: Aug, 2024
 Description: This script takes videos from raw_videos/ and appends the landmarks from media 

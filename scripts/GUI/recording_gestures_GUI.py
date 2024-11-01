@@ -1,3 +1,9 @@
+"""
+File: gui.py
+Author: Anna Kravtsova written for Thesis (2024)
+Date: September, 2024
+Description: gui for recording
+"""
 import cv2
 import os
 import time
@@ -5,7 +11,7 @@ import tkinter as tk
 from tkinter import messagebox
 import mediapipe as mp
 
-# Initialize MediaPipe Hands model
+#  MediaPipe Hands model
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(max_num_hands=1, min_detection_confidence=0.5, min_tracking_confidence=0.5)
 mp_drawing = mp.solutions.drawing_utils
